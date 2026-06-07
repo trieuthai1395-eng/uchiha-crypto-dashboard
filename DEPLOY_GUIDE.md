@@ -187,3 +187,4 @@ Vercel Dashboard → Your Project → Settings → Domains
 *Được xây dựng bởi Itachi Uchiha — người hiểu rằng kiến thức thật sự là vũ khí mạnh nhất.*
 
 ⚠️ **DISCLAIMER**: Đây là công cụ nghiên cứu và giải trí. Không phải lời khuyên tài chính. DYOR.
+"Update deploy" 
