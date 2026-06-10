@@ -1,6 +1,4 @@
 ﻿/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // Không dùng output export hay standalone
-};
+const nextConfig = {};
 
 module.exports = nextConfig;
