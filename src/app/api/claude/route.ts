@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { prompt } = await request.json();
+    const body = await request.json();
+    const { prompt } = body;
 
     if (!prompt) {
-      return NextResponse.json({ error: "Không có prompt" }, { status: 400 });
+      return NextResponse.json({ error: "Missing prompt" }, { status: 400 });
     }
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: "Chưa có API Key Claude" }, { status: 500 });
+      return NextResponse.json({ error: "Missing API Key" }, { status: 500 });
     }
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -22,8 +23,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         model: "claude-3-5-sonnet-20240620",
-        max_tokens: 1000,
-        temperature: 0.7,
+        max_tokens: 800,
         messages: [{ role: "user", content: prompt }]
       })
     });
@@ -31,16 +31,15 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Claude API Error:", data);
-      return NextResponse.json({ error: data.error?.message || "Lỗi Claude API" }, { status: response.status });
+      return NextResponse.json({ error: data }, { status: response.status });
     }
 
     return NextResponse.json({ 
-      content: data.content?.[0]?.text || "Không có phản hồi từ AI" 
+      content: data.content?.[0]?.text || "No response" 
     });
 
-  } catch (error: any) {
-    console.error("Server Error:", error);
-    return NextResponse.json({ error: "Lỗi server: " + error.message }, { status: 500 });
+  } catch (error) {
+    console.error("Claude route error:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
