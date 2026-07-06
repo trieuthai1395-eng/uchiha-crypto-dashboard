@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
-      return NextResponse.json({ error: "Chưa có API Key" }, { status: 500 });
+      return NextResponse.json({ error: "Chưa có API Key Claude" }, { status: 500 });
     }
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -22,7 +22,8 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         model: "claude-3-5-sonnet-20240620",
-        max_tokens: 800,
+        max_tokens: 1000,
+        temperature: 0.7,
         messages: [{ role: "user", content: prompt }]
       })
     });
@@ -30,15 +31,16 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     if (!response.ok) {
-      return NextResponse.json({ error: data }, { status: response.status });
+      console.error("Claude API Error:", data);
+      return NextResponse.json({ error: data.error?.message || "Lỗi Claude API" }, { status: response.status });
     }
 
     return NextResponse.json({ 
-      content: data.content[0].text 
+      content: data.content?.[0]?.text || "Không có phản hồi từ AI" 
     });
 
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: "Lỗi server" }, { status: 500 });
+  } catch (error: any) {
+    console.error("Server Error:", error);
+    return NextResponse.json({ error: "Lỗi server: " + error.message }, { status: 500 });
   }
 }
