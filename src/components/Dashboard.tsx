@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import SharinganEye from "./SharinganEye";
 import PriceSection from "./PriceSection";
 import TradeSection from "./TradeSection";
-import { Prices, MACRO_DATA, CASHFLOW_DATA, NEWS_DATA, PLANETS } from "@/lib/data";
+import { Prices } from "@/lib/data";
 
 // ── Fetch giá CoinGecko ─────────────────────────────────────────────────────────
 async function fetchCoinPrices(): Promise<Prices | null> {
