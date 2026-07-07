@@ -117,7 +117,7 @@ const S = {
 
 // ── Main Dashboard ──────────────────────────────────────────────────────────────
 export default function Dashboard() {
-  const [prices, setPrices] = useState<Prices>({
+  const [prices, setPrices] = useState<Prices>({   btc: { price: null, change: null },   eth: { price: null, change: null }, });   btc: { price: null, change: null },   eth: { price: null, change: null }, });
     btc: { price: null, change: null, mcap: null },
     eth: { price: null, change: null, mcap: null },
   });
