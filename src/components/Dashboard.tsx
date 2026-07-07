@@ -10,13 +10,13 @@ import { Prices, MACRO_DATA, CASHFLOW_DATA, NEWS_DATA, PLANETS } from "@/lib/dat
 async function fetchCoinPrices(): Promise<Prices | null> {
   try {
     const res = await fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true&include_market_cap=true"
+      "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd&include_24hr_change=true"
     );
     if (!res.ok) throw new Error("API lỗi");
     const d = await res.json();
     return {
-      btc: { price: d.bitcoin?.usd ?? null, change: d.bitcoin?.usd_24h_change ?? null, mcap: d.bitcoin?.usd_market_cap ?? null },
-      eth: { price: d.ethereum?.usd ?? null, change: d.ethereum?.usd_24h_change ?? null, mcap: d.ethereum?.usd_market_cap ?? null },
+      btc: { price: d.bitcoin?.usd ?? null, change: d.bitcoin?.usd_24h_change ?? null },
+      eth: { price: d.ethereum?.usd ?? null, change: d.ethereum?.usd_24h_change ?? null },
     };
   } catch { return null; }
 }
@@ -132,9 +132,10 @@ export default function Dashboard() {
     if (data) {
       setPrices(data);
     } else {
-      setPrices({
-        btc: { price: 94250, change: 2.34, mcap: 1850000000000 },
-        eth: { price: 3540, change: -0.87, mcap: 425000000000 },
+    setPrices({
+  btc: { price: 94250, change: 2.34 },
+  eth: { price: 3540, change: -0.87 },
+});
       });
     }
     setLastUpdate(new Date().toLocaleTimeString("vi-VN"));
