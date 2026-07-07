@@ -132,11 +132,11 @@ export default function Dashboard() {
     if (data) {
       setPrices(data);
     } else {
-      setPrices({
-        btc: { price: 94250, change: 2.34, mcap: 1850000000000 },
-        eth: { price: 3540, change: -0.87, mcap: 425000000000 },
-      });
-    }
+  setPrices({
+    btc: { price: 94250, change: 2.34 },
+    eth: { price: 3540, change: -0.87 },
+  });
+}
     setLastUpdate(new Date().toLocaleTimeString("vi-VN"));
     setLoading(false);
   }, []);
