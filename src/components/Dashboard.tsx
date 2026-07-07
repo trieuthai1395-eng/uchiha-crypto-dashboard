@@ -15,9 +15,9 @@ async function fetchCoinPrices(): Promise<Prices | null> {
     if (!res.ok) throw new Error("API lỗi");
     const d = await res.json();
     return {
-      btc: { price: d.bitcoin?.usd ?? null, change: d.bitcoin?.usd_24h_change ?? null, mcap: d.bitcoin?.usd_market_cap ?? null },
-      eth: { price: d.ethereum?.usd ?? null, change: d.ethereum?.usd_24h_change ?? null, mcap: d.ethereum?.usd_market_cap ?? null },
-    };
+  btc: { price: d.bitcoin?.usd ?? null, change: d.bitcoin?.usd_24h_change ?? null },
+  eth: { price: d.ethereum?.usd ?? null, change: d.ethereum?.usd_24h_change ?? null },
+};
   } catch { return null; }
 }
 
