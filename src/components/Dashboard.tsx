@@ -148,22 +148,25 @@ export default function Dashboard() {
   }, [loadPrices]);
 
   const generateAI = useCallback(async (key: string, prompt: string) => {
-    setAiLoading(p => ({ ...p, [key]: true }));
-    try {
-      const res = await fetch("/api/claude", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [{ role: "user", content: prompt }] }),
-      });
-      const data = await res.json();
-      const text = data.content?.[0]?.text || "Phản hồi rỗng từ Sharingan...";
-      setAiContent(p => ({ ...p, [key]: text }));
-    } catch {
-      setAiContent(p => ({ ...p, [key]: "Chakra kết nối thất bại. Kiểm tra ANTHROPIC_API_KEY trong Vercel Environment Variables." }));
-    }
-    setAiLoading(p => ({ ...p, [key]: false }));
-  }, []);
+  setAiLoading(p => ({ ...p, [key]: true }));
+  try {
+    const res = await fetch("/api/claude", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt: prompt }),
+    });
 
+    if (!res.ok) throw new Error("API error");
+
+    const data = await res.json();
+    const text = data.content || "Phản hồi rỗng...";
+    setAiContent(p => ({ ...p, [key]: text }));
+  } catch (err) {
+    console.error(err);
+    setAiContent(p => ({ ...p, [key]: "Lỗi kết nối AI. Kiểm tra API Key." }));
+  }
+  setAiLoading(p => ({ ...p, [key]: false }));
+}, []);
   return (
     <>
       {/* Ambient FX */}
