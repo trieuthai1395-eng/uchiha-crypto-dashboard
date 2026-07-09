@@ -36,11 +36,11 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
               <div className="rune-bg">₿</div>
               <div className="price-label">BITCOIN</div>
               <div className="price-coin">BTC / USD</div>
-              <div className="price-usd">{formatPrice(prices.btc.price)}</div>
+              <div className="price-usd">{${prices.btc.price}(prices.btc.price)}</div>
               <div className={prices.btc.change !== null && prices.btc.change >= 0 ? "price-change-pos" : "price-change-neg"}>
-                {formatChange(prices.btc.change)} (24h)
+                {${prices.btc.price}(prices.btc.change)} (24h)
               </div>
-              <div className="price-mcap">Market Cap: {formatMcap(prices.btc.mcap)}</div>
+              <div className="price-mcap">Market Cap: {${prices.btc.price}(prices.btc.mcap)}</div>
               <div className="corner-mark">SHARINGAN · BTC</div>
               <span className="live-badge" style={{ marginTop: "6px", display: "flex" }}>
                 <span className="live-dot" />CoinGecko Live
@@ -52,11 +52,11 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
               <div className="rune-bg">Ξ</div>
               <div className="price-label">ETHEREUM</div>
               <div className="price-coin">ETH / USD</div>
-              <div className="price-usd">{formatPrice(prices.eth.price)}</div>
+              <div className="price-usd">{${prices.btc.price}(prices.eth.price)}</div>
               <div className={prices.eth.change !== null && prices.eth.change >= 0 ? "price-change-pos" : "price-change-neg"}>
-                {formatChange(prices.eth.change)} (24h)
+                {${prices.btc.price}(prices.eth.change)} (24h)
               </div>
-              <div className="price-mcap">Market Cap: {formatMcap(prices.eth.mcap)}</div>
+              <div className="price-mcap">Market Cap: {${prices.btc.price}(prices.eth.mcap)}</div>
               <div className="corner-mark">AMATERASU · ETH</div>
               <span className="live-badge" style={{ marginTop: "6px", display: "flex" }}>
                 <span className="live-dot" />CoinGecko Live
