@@ -205,5 +205,9 @@ export default function Dashboard() {
 
           {/* ── 1. Giá Coins ── */}
           <PriceSection prices={prices} loading={loading} lastUpdate={lastUpdate} />
-
+        </main>
+      </div>
+    </>
+  );
+}
         
