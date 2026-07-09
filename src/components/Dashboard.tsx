@@ -206,10 +206,4 @@ export default function Dashboard() {
           {/* ── 1. Giá Coins ── */}
           <PriceSection prices={prices} loading={loading} lastUpdate={lastUpdate} />
 
-          {/* ── 2. Dòng Tiền ── */}
-          <section className="card" style={{ gridColumn: "1 / -1" }}>
-            <div className="card-inner">
-              <div className="section-title">
-                <CrowIcon size={14} /> Phân Tích Dòng Tiền · Capital Flow
-              </div>
-             
+        
