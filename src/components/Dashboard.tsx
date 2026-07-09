@@ -117,10 +117,10 @@ const S = {
 
 // ── Main Dashboard ──────────────────────────────────────────────────────────────
 export default function Dashboard() {
-  const [prices, setPrices] = useState<Prices>({   btc: { price: null, change: null },   eth: { price: null, change: null }, });   btc: { price: null, change: null },   eth: { price: null, change: null }, });
-    btc: { price: null, change: null, mcap: null },
-    eth: { price: null, change: null, mcap: null },
-  });
+  const [prices, setPrices] = useState<Prices>({
+  btc: { price: null, change: null },
+  eth: { price: null, change: null },
+});
   const [loading, setLoading] = useState(true);
   const [lastUpdate, setLastUpdate] = useState("");
   const [aiContent, setAiContent] = useState<Record<string, string>>({});
