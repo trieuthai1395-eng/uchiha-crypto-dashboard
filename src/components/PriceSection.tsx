@@ -1,5 +1,4 @@
 "use client";
-
 import { Prices } from "@/lib/data";
 
 interface PriceSectionProps {
@@ -22,7 +21,6 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
             </span>
           )}
         </div>
-
         {loading ? (
           <div className="loading-spinner">
             <div className="spinner-dot" />
@@ -36,17 +34,15 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
               <div className="rune-bg">₿</div>
               <div className="price-label">BITCOIN</div>
               <div className="price-coin">BTC / USD</div>
-             <div className="price-usd">${prices.btc.price}</div>
+              <div className="price-usd">${prices.btc.price}</div>
               <div className={prices.btc.change !== null && prices.btc.change >= 0 ? "price-change-pos" : "price-change-neg"}>
                 {prices.btc.change} (24h)
               </div>
-              <div className="price-mcap">Market Cap: {${prices.btc.price}(prices.btc.mcap)}</div>
               <div className="corner-mark">SHARINGAN · BTC</div>
               <span className="live-badge" style={{ marginTop: "6px", display: "flex" }}>
                 <span className="live-dot" />CoinGecko Live
               </span>
             </div>
-
             {/* ETH */}
             <div className="price-card">
               <div className="rune-bg">Ξ</div>
@@ -56,21 +52,18 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
               <div className={prices.eth.change !== null && prices.eth.change >= 0 ? "price-change-pos" : "price-change-neg"}>
                 {prices.eth.change} (24h)
               </div>
-              <div className="price-mcap">Market Cap: {${prices.btc.price}(prices.eth.mcap)}</div>
               <div className="corner-mark">AMATERASU · ETH</div>
               <span className="live-badge" style={{ marginTop: "6px", display: "flex" }}>
                 <span className="live-dot" />CoinGecko Live
               </span>
             </div>
-
             {/* PI */}
             <div className="price-card">
               <div className="rune-bg">π</div>
               <div className="price-label">PI NETWORK</div>
               <div className="price-coin">PI / USD</div>
-              <div className="price-usd">${PI_MOCK_PRICE.toFixed(2)}</div>
-              <div className="price-change-pos">+{PI_MOCK_CHANGE}% (24h)</div>
-              <div className="price-mcap">Ước tính · Mainnet chờ phê duyệt</div>
+              <div className="price-usd">$1.42</div>
+              <div className="price-change-pos">+5.21% (24h)</div>
               <div className="corner-mark">SUSANOO · PI</div>
               <span className="mock-badge" style={{ marginTop: "6px", display: "flex" }}>
                 ⚠ Giá Tham Khảo Mock
