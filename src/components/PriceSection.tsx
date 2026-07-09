@@ -1,6 +1,6 @@
 "use client";
 
-import { Prices, PI_MOCK_PRICE, PI_MOCK_CHANGE, formatPrice, formatMcap, formatChange } from "@/lib/data";
+import { Prices } from "@/lib/data";
 
 interface PriceSectionProps {
   prices: Prices;
