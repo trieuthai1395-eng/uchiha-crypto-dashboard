@@ -22,24 +22,33 @@ async function fetchCoinPrices(): Promise<Prices | null> {
 const S = {
   dashboard: {
     minHeight: "100vh",
-    background: "radial-gradient(ellipse at 20% 0%, #1a000822, transparent 50%), linear-gradient(180deg,#080008,#050005)",
+    background: "linear-gradient(180deg, #0a0a0a, #1a1a2e, #0f0f23)",
     position: "relative" as const,
     overflowX: "hidden" as const,
+    color: "#00ff9f",
+    fontFamily: "'Roboto Mono', monospace",
   },
   header: {
     position: "relative" as const, textAlign: "center" as const,
     padding: "40px 20px 56px",
-    borderBottom: "1px solid #cc000033",
+    borderBottom: "2px solid #ffcc00",
+    background: "linear-gradient(180deg, #1a1a2e, transparent)",
   },
   headerTitle: {
-    fontSize: "clamp(1.5rem,5vw,3.2rem)", fontWeight: 900,
-    color: "#cc0000",
-    textShadow: "0 0 20px #cc0000",
+    fontSize: "clamp(2rem,6vw,4rem)", fontWeight: 900,
+    color: "#ffcc00",
+    textShadow: "0 0 30px #ffcc00, 0 0 60px #ff6600",
+    letterSpacing: "0.2em",
+  },
+  headerSub: {
+    fontSize: "1rem",
+    color: "#00ff9f88",
+    letterSpacing: "0.3em",
   },
   mainGrid: {
-    display: "grid", gridTemplateColumns: "repeat(2,1fr)",
-    gap: "16px", padding: "24px",
-    maxWidth: "1400px", margin: "0 auto",
+    display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(500px,1fr))",
+    gap: "20px", padding: "30px",
+    maxWidth: "1600px", margin: "0 auto",
   },
 };
 
@@ -63,7 +72,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadPrices();
-    const id = setInterval(loadPrices, 60000);
+    const id = setInterval(loadPrices, 30000);
     return () => clearInterval(id);
   }, [loadPrices]);
 
@@ -76,10 +85,10 @@ export default function Dashboard() {
         body: JSON.stringify({ prompt }),
       });
       const data = await res.json();
-      const text = data.content || "Phản hồi rỗng...";
+      const text = data.content || "Optimus Prime đang phân tích...";
       setAiContent(p => ({ ...p, [key]: text }));
     } catch {
-      setAiContent(p => ({ ...p, [key]: "Lỗi kết nối AI." }));
+      setAiContent(p => ({ ...p, [key]: "Lỗi kết nối Autobot." }));
     }
     setAiLoading(p => ({ ...p, [key]: false }));
   }, []);
@@ -87,8 +96,8 @@ export default function Dashboard() {
   return (
     <div style={S.dashboard}>
       <header style={S.header}>
-        <h1 style={S.headerTitle}>UCHIHA RESEARCH</h1>
-        <p>Crypto Intelligence Dashboard</p>
+        <h1 style={S.headerTitle}>TRANSFORMER CRYPTO COMMAND</h1>
+        <p style={S.headerSub}>OPTIMUS PRIME INTELLIGENCE DASHBOARD</p>
       </header>
 
       <main style={S.mainGrid}>
