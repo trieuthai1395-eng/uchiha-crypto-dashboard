@@ -52,9 +52,9 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
               <div className="rune-bg">Ξ</div>
               <div className="price-label">ETHEREUM</div>
               <div className="price-coin">ETH / USD</div>
-              <div className="price-usd">{${prices.btc.price}(prices.eth.price)}</div>
+              <div className="price-usd">${prices.eth.price}</div>
               <div className={prices.eth.change !== null && prices.eth.change >= 0 ? "price-change-pos" : "price-change-neg"}>
-                {${prices.btc.price}(prices.eth.change)} (24h)
+                {prices.eth.change} (24h)
               </div>
               <div className="price-mcap">Market Cap: {${prices.btc.price}(prices.eth.mcap)}</div>
               <div className="corner-mark">AMATERASU · ETH</div>
