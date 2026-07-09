@@ -36,9 +36,9 @@ export default function PriceSection({ prices, loading, lastUpdate }: PriceSecti
               <div className="rune-bg">₿</div>
               <div className="price-label">BITCOIN</div>
               <div className="price-coin">BTC / USD</div>
-              <div className="price-usd">{${prices.btc.price}(prices.btc.price)}</div>
+             <div className="price-usd">${prices.btc.price}</div>
               <div className={prices.btc.change !== null && prices.btc.change >= 0 ? "price-change-pos" : "price-change-neg"}>
-                {${prices.btc.price}(prices.btc.change)} (24h)
+                {prices.btc.change} (24h)
               </div>
               <div className="price-mcap">Market Cap: {${prices.btc.price}(prices.btc.mcap)}</div>
               <div className="corner-mark">SHARINGAN · BTC</div>
