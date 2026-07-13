@@ -74,7 +74,13 @@ export default function Dashboard() {
   };
 
   const closeTrade = (index: number) => {
-    setTradeLog(prev => prev.map((t, i) => i === index ? { ...t, status: "CLOSED", closePrice: prices.btc.price, pnl: ((prices.btc.price - t.entryPrice) / t.entryPrice * 100).toFixed(2) } : t));
+    const currentPrice = prices.btc.price || 0;
+    setTradeLog(prev => prev.map((t, i) => i === index ? { 
+      ...t, 
+      status: "CLOSED", 
+      closePrice: currentPrice, 
+      pnl: currentPrice > 0 ? ((currentPrice - t.entryPrice) / t.entryPrice * 100).toFixed(2) : "0" 
+    } : t));
   };
 
   return (
