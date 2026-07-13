@@ -70,19 +70,17 @@ export default function Dashboard() {
 
   return (
     <div style={{ background: "#0a0a0a", color: "#00ff9f", minHeight: "100vh", fontFamily: "'Courier New', monospace", padding: "20px" }}>
-      <div style={{ textAlign: "center", padding: "40px", borderBottom: "3px solid #ffcc00" }}>
-        <h1 style={{ fontSize: "3.5rem", color: "#ffcc00", textShadow: "0 0 40px #ffcc00", letterSpacing: "8px" }}>TRANSFORMER CRYPTO COMMAND</h1>
-        <p style={{ color: "#00ff9f", letterSpacing: "6px" }}>OPTIMUS PRIME SYSTEM ONLINE</p>
+      <div style={{ textAlign: "center", padding: "40px", borderBottom: "3px solid #00ff9f" }}>
+        <h1 style={{ fontSize: "3.5rem", color: "#ffcc00", textShadow: "0 0 40px #ffcc00" }}>TRANSFORMER CRYPTO COMMAND</h1>
+        <p style={{ color: "#00ff9f" }}>OPTIMUS PRIME SYSTEM ONLINE</p>
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginTop: "30px" }}>
-        {/* Giám sát */}
-        <div style={{ flex: 1, minWidth: "400px", border: "2px solid #00ff9f", padding: "15px" }}>
+        <div style={{ flex: 1, minWidth: "400px", border: "2px solid #00ff9f", padding: "20px" }}>
           <PriceSection prices={prices} loading={loading} lastUpdate={lastUpdate} />
         </div>
 
-        {/* Lệnh */}
-        <div style={{ flex: 1, minWidth: "400px", border: "2px solid #ffcc00", padding: "15px" }}>
+        <div style={{ flex: 1, minWidth: "400px", border: "2px solid #ffcc00", padding: "20px" }}>
           <TradeSection 
             prices={prices} 
             onGenerateAI={generateAI} 
@@ -92,7 +90,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Nhật Ký Lệnh */}
       <div style={{ marginTop: "30px", border: "2px solid #ffcc00", padding: "20px" }}>
         <h2 style={{ color: "#ffcc00" }}>NHẬT KÝ LỆNH</h2>
         {tradeLog.length === 0 ? (
