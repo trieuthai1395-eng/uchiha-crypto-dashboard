@@ -29,13 +29,11 @@ export default function Dashboard() {
   const [aiLoading, setAiLoading] = useState<Record<string, boolean>>({});
   const [tradeLog, setTradeLog] = useState<any[]>([]);
 
-  // Load saved log from localStorage
   useEffect(() => {
     const savedLog = localStorage.getItem("tradeLog");
     if (savedLog) setTradeLog(JSON.parse(savedLog));
   }, []);
 
-  // Save log to localStorage
   useEffect(() => {
     localStorage.setItem("tradeLog", JSON.stringify(tradeLog));
   }, [tradeLog]);
@@ -71,12 +69,12 @@ export default function Dashboard() {
     setAiLoading(p => ({ ...p, [key]: false }));
   }, []);
 
-  const addToLog = (command: string) => {
-    setTradeLog(prev => [...prev, { time: new Date().toLocaleTimeString(), command, status: "OPEN", price: prices.btc.price }]);
+  const addToLog = (command: string, entryPrice: number) => {
+    setTradeLog(prev => [...prev, { time: new Date().toLocaleTimeString(), command, entryPrice, status: "OPEN" }]);
   };
 
   const closeTrade = (index: number) => {
-    setTradeLog(prev => prev.map((t, i) => i === index ? { ...t, status: "CLOSED" } : t));
+    setTradeLog(prev => prev.map((t, i) => i === index ? { ...t, status: "CLOSED", closePrice: prices.btc.price, pnl: ((prices.btc.price - t.entryPrice) / t.entryPrice * 100).toFixed(2) } : t));
   };
 
   return (
@@ -109,7 +107,10 @@ export default function Dashboard() {
         ) : (
           tradeLog.map((trade, index) => (
             <div key={index} style={{ background: "#1a1a2e", padding: "15px", margin: "8px 0", borderLeft: "4px solid #00ff9f" }}>
-              {trade.time} - {trade.command} <strong>[{trade.status}]</strong> - Giá: ${trade.price}
+              {trade.time} - {trade.command} 
+              <strong>[{trade.status}]</strong> 
+              Entry: ${trade.entryPrice}
+              {trade.status === "CLOSED" && ` | Close: ${trade.closePrice} | PNL: ${trade.pnl}%`}
               {trade.status === "OPEN" && <button onClick={() => closeTrade(index)} style={{ marginLeft: "15px", color: "#ffcc00" }}>Chốt Lệnh</button>}
             </div>
           ))
