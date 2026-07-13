@@ -7,9 +7,10 @@ interface TradeSectionProps {
   onGenerateAI: (key: string, prompt: string) => void;
   aiContent: Record<string, string>;
   aiLoading: Record<string, boolean>;
+  addToLog: (command: string) => void;
 }
 
-export default function TradeSection({ prices, onGenerateAI, aiContent, aiLoading }: TradeSectionProps) {
+export default function TradeSection({ prices, onGenerateAI, aiContent, aiLoading, addToLog }: TradeSectionProps) {
   const [activeTab, setActiveTab] = useState<"scalp" | "swing">("scalp");
   const bp = prices.btc.price || 76000;
   const ep = prices.eth.price || 2620;
