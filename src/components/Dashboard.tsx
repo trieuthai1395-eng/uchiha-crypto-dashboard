@@ -70,7 +70,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ background: "#0a0a0a", color: "#00ff9f", minHeight: "100vh", fontFamily: "'Courier New', monospace", padding: "20px" }}>
-      <div style={{ textAlign: "center", padding: "40px", borderBottom: "3px solid #00ff9f" }}>
+      <div style={{ textAlign: "center", padding: "40px", borderBottom: "3px solid #ffcc00" }}>
         <h1 style={{ fontSize: "3.5rem", color: "#ffcc00", textShadow: "0 0 40px #ffcc00" }}>TRANSFORMER CRYPTO COMMAND</h1>
         <p style={{ color: "#00ff9f" }}>OPTIMUS PRIME SYSTEM ONLINE</p>
       </div>
@@ -86,6 +86,7 @@ export default function Dashboard() {
             onGenerateAI={generateAI} 
             aiContent={aiContent} 
             aiLoading={aiLoading} 
+            addToLog={addToLog} 
           />
         </div>
       </div>
