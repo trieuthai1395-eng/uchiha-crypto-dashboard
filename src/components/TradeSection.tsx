@@ -15,94 +15,64 @@ export default function TradeSection({ prices, onGenerateAI, aiContent, aiLoadin
   const ep = prices.eth.price || 2620;
 
   return (
-    <section className="card section-full">
-      <div className="card-inner">
-        <div className="section-title">
-          <span>⚔</span> Khuyến Nghị Giao Dịch · Trade Signal
+    <div style={{ border: "2px solid #ffcc00", padding: "15px", background: "#1a1a2e" }}>
+      <div style={{ fontSize: "1.1rem", color: "#ffcc00", marginBottom: "15px" }}>KHẨN NGHỊ GIAO DỊCH · TRADE SIGNAL</div>
+
+      {/* Tabs */}
+      <div style={{ display: "flex", marginBottom: "15px", borderBottom: "1px solid #ffcc00" }}>
+        <div 
+          onClick={() => setActiveTab("scalp")} 
+          style={{ padding: "10px 20px", cursor: "pointer", borderBottom: activeTab === "scalp" ? "3px solid #00ff9f" : "3px solid transparent", color: activeTab === "scalp" ? "#00ff9f" : "#888" }}
+        >
+          ⚡ LỆNH CÁ LIA THIA (Scalp)
         </div>
-
-        {/* Tabs */}
-        <div className="tabs">
-          <div className={`tab${activeTab === "scalp" ? " active" : ""}`} onClick={() => setActiveTab("scalp")}>
-            🗡 Lệnh Cá Lia Thia (Scalp)
-          </div>
-          <div className={`tab${activeTab === "swing" ? " active" : ""}`} onClick={() => setActiveTab("swing")}>
-            🌙 Lệnh Nuôi Theo Tuần (Swing)
-          </div>
+        <div 
+          onClick={() => setActiveTab("swing")} 
+          style={{ padding: "10px 20px", cursor: "pointer", borderBottom: activeTab === "swing" ? "3px solid #00ff9f" : "3px solid transparent", color: activeTab === "swing" ? "#00ff9f" : "#888" }}
+        >
+          🌙 LỆNH NUÔI TUẦN (Swing)
         </div>
-
-        {activeTab === "scalp" && (
-          <div>
-            <div className="trade-card">
-              <div className="trade-type scalp">⚡ SCALPING · CÁ LIA THIA</div>
-              <div className="trade-row">
-                <div className="trade-pair">BTC / USDT</div>
-                <div className="trade-dir-long">LONG</div>
-              </div>
-              <div className="trade-levels">
-                <div className="level-box">
-                  <span className="level-label">VÀO LỆNH</span>
-                  <span className="level-val entry">{Math.round(bp * 0.998)}</span>
-                </div>
-                <div className="level-box">
-                  <span className="level-label">CHỐT LỜI</span>
-                  <span className="level-val tp">{Math.round(bp * 1.015)}</span>
-                </div>
-                <div className="level-box">
-                  <span className="level-label">CẮT LỖ</span>
-                  <span className="level-val sl">{Math.round(bp * 0.991)}</span>
-                </div>
-              </div>
-              <div className="trade-meta">Đòn bẩy: 3-5x · Khung 1H</div>
-            </div>
-
-            <button
-              className="ai-btn"
-              onClick={() => onGenerateAI("scalp", "Phân tích scalping BTC ETH realtime. Đưa entry TP SL. Tiếng Việt.")}
-              disabled={aiLoading.scalp}
-            >
-              {aiLoading.scalp ? "⏳..." : "👁 Sinh Lệnh Scalp AI"}
-            </button>
-            {aiContent.scalp && <div className="ai-response">{aiContent.scalp}</div>}
-          </div>
-        )}
-
-        {activeTab === "swing" && (
-          <div>
-            <div className="trade-card">
-              <div className="trade-type swing">🌙 SWING · NUÔI TUẦN</div>
-              <div className="trade-row">
-                <div className="trade-pair">BTC / USDT</div>
-                <div className="trade-dir-long">LONG</div>
-              </div>
-              <div className="trade-levels">
-                <div className="level-box">
-                  <span className="level-label">MUA VÀO</span>
-                  <span className="level-val entry">{Math.round(bp * 0.97)}</span>
-                </div>
-                <div className="level-box">
-                  <span className="level-label">MỤC TIÊU</span>
-                  <span className="level-val tp">{Math.round(bp * 1.12)}</span>
-                </div>
-                <div className="level-box">
-                  <span className="level-label">DỪNG LỖ</span>
-                  <span className="level-val sl">{Math.round(bp * 0.93)}</span>
-                </div>
-              </div>
-              <div className="trade-meta">Giữ 1-3 tuần</div>
-            </div>
-
-            <button
-              className="ai-btn"
-              onClick={() => onGenerateAI("swing", "Phân tích swing trade BTC ETH. Đưa lệnh dài hạn. Tiếng Việt.")}
-              disabled={aiLoading.swing}
-            >
-              {aiLoading.swing ? "⏳..." : "🌙 Sinh Lệnh Swing AI"}
-            </button>
-            {aiContent.swing && <div className="ai-response">{aiContent.swing}</div>}
-          </div>
-        )}
       </div>
-    </section>
+
+      {/* Scalp */}
+      {activeTab === "scalp" && (
+        <div>
+          <div style={{ color: "#ffcc00", marginBottom: "10px" }}>BTC / USDT - LONG</div>
+          <div style={{ display: "flex", gap: "20px", marginBottom: "15px" }}>
+            <div>VÀO LỆNH: <span style={{ color: "#ff8800" }}>{Math.round(bp * 0.998)}</span></div>
+            <div>CHỐT LỜI: <span style={{ color: "#00ff9f" }}>{Math.round(bp * 1.015)}</span></div>
+            <div>CẮT LỖ: <span style={{ color: "#cc0000" }}>{Math.round(bp * 0.991)}</span></div>
+          </div>
+          <button 
+            onClick={() => onGenerateAI("scalp", "Sinh lệnh scalping BTC ETH realtime. Entry TP SL. Tiếng Việt.")}
+            disabled={aiLoading.scalp}
+            style={{ background: "#00ff9f", color: "#000", padding: "10px 20px", border: "none", cursor: "pointer" }}
+          >
+            Sinh Lệnh Scalp AI
+          </button>
+          {aiContent.scalp && <div style={{ marginTop: "15px", color: "#c8a882" }}>{aiContent.scalp}</div>}
+        </div>
+      )}
+
+      {/* Swing */}
+      {activeTab === "swing" && (
+        <div>
+          <div style={{ color: "#ffcc00", marginBottom: "10px" }}>BTC / USDT - LONG</div>
+          <div style={{ display: "flex", gap: "20px", marginBottom: "15px" }}>
+            <div>MUA VÀO: <span style={{ color: "#ff8800" }}>{Math.round(bp * 0.97)}</span></div>
+            <div>MỤC TIÊU: <span style={{ color: "#00ff9f" }}>{Math.round(bp * 1.12)}</span></div>
+            <div>DỪNG LỖ: <span style={{ color: "#cc0000" }}>{Math.round(bp * 0.93)}</span></div>
+          </div>
+          <button 
+            onClick={() => onGenerateAI("swing", "Sinh lệnh swing BTC ETH. Tiếng Việt.")}
+            disabled={aiLoading.swing}
+            style={{ background: "#00ff9f", color: "#000", padding: "10px 20px", border: "none", cursor: "pointer" }}
+          >
+            Sinh Lệnh Swing AI
+          </button>
+          {aiContent.swing && <div style={{ marginTop: "15px", color: "#c8a882" }}>{aiContent.swing}</div>}
+        </div>
+      )}
+    </div>
   );
 }
