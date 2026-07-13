@@ -55,7 +55,7 @@ export default function Dashboard() {
       const text = data.content || "Autobot đang phân tích...";
       setAiContent(p => ({ ...p, [key]: text }));
     } catch {
-      setAiContent(p => ({ ...p, [key]: "Lỗi kết nối." }));
+      setAiContent(p => ({ ...p, [key]: "Lỗi kết nối Autobot." }));
     }
     setAiLoading(p => ({ ...p, [key]: false }));
   }, []);
@@ -69,33 +69,21 @@ export default function Dashboard() {
   };
 
   return (
-    <div style={{ 
-      background: "linear-gradient(#0a0a0a, #1a1a2e)", 
-      color: "#00ff9f", 
-      minHeight: "100vh", 
-      fontFamily: "'Courier New', monospace",
-      padding: "20px"
-    }}>
-      {/* Header Cyberpunk */}
-      <div style={{ textAlign: "center", padding: "40px 20px", borderBottom: "3px solid #00ff9f", marginBottom: "30px" }}>
-        <h1 style={{ 
-          fontSize: "3.5rem", 
-          color: "#ffcc00", 
-          textShadow: "0 0 30px #ffcc00, 0 0 60px #ff00ff",
-          letterSpacing: "8px",
-          textTransform: "uppercase"
-        }}>TRANSFORMER CRYPTO COMMAND</h1>
-        <p style={{ color: "#00ff9f", letterSpacing: "6px", fontSize: "1.1rem" }}>OPTIMUS PRIME SYSTEM ONLINE</p>
+    <div style={{ background: "#0a0a0a", color: "#00ff9f", minHeight: "100vh", fontFamily: "'Courier New', monospace", padding: "20px" }}>
+      {/* Header */}
+      <div style={{ textAlign: "center", padding: "40px 20px", borderBottom: "3px solid #ffcc00" }}>
+        <h1 style={{ fontSize: "3rem", color: "#ffcc00", textShadow: "0 0 30px #ffcc00" }}>TRANSFORMER CRYPTO COMMAND</h1>
+        <p>OPTIMUS PRIME SYSTEM ONLINE</p>
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", maxWidth: "1600px", margin: "0 auto" }}>
-        {/* Giám sát thị trường */}
-        <div style={{ flex: 1, minWidth: "450px" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", maxWidth: "1600px", margin: "30px auto" }}>
+        {/* Giám sát Thị Trường */}
+        <div style={{ flex: 1, minWidth: "400px", border: "1px solid #00ff9f", padding: "15px" }}>
           <PriceSection prices={prices} loading={loading} lastUpdate={lastUpdate} />
         </div>
 
-        {/* Trade Signal */}
-        <div style={{ flex: 1, minWidth: "450px" }}>
+        {/* Lệnh */}
+        <div style={{ flex: 1, minWidth: "400px", border: "1px solid #ffcc00", padding: "15px" }}>
           <TradeSection 
             prices={prices} 
             onGenerateAI={generateAI} 
@@ -106,19 +94,15 @@ export default function Dashboard() {
       </div>
 
       {/* Nhật Ký Lệnh */}
-      <div style={{ marginTop: "30px", padding: "20px", borderTop: "2px solid #ffcc00" }}>
-        <h2 style={{ color: "#ffcc00", marginBottom: "15px" }}>NHẬT KÝ LỆNH</h2>
+      <div style={{ margin: "30px", border: "1px solid #ffcc00", padding: "20px" }}>
+        <h2 style={{ color: "#ffcc00" }}>NHẬT KÝ LỆNH</h2>
         {tradeLog.length === 0 ? (
-          <p>Chưa có lệnh nào. Sinh lệnh và lưu lại.</p>
+          <p>Chưa có lệnh. Sinh lệnh và lưu lại.</p>
         ) : (
           tradeLog.map((trade, index) => (
-            <div key={index} style={{ background: "#1a1a2e", padding: "15px", margin: "8px 0", borderLeft: "4px solid #00ff9f" }}>
-              {trade.time} — {trade.command} <strong>[{trade.status}]</strong>
-              {trade.status === "OPEN" && (
-                <button onClick={() => closeTrade(index)} style={{ marginLeft: "15px", color: "#ffcc00" }}>
-                  Chốt Lệnh
-                </button>
-              )}
+            <div key={index} style={{ background: "#1a1a2e", padding: "12px", margin: "8px 0", borderLeft: "4px solid #00ff9f" }}>
+              {trade.time} - {trade.command} <strong>[{trade.status}]</strong>
+              {trade.status === "OPEN" && <button onClick={() => closeTrade(index)} style={{ marginLeft: "15px", color: "#ffcc00" }}>Chốt Lệnh</button>}
             </div>
           ))
         )}
