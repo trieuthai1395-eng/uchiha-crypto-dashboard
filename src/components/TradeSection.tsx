@@ -7,7 +7,7 @@ interface TradeSectionProps {
   onGenerateAI: (key: string, prompt: string) => void;
   aiContent: Record<string, string>;
   aiLoading: Record<string, boolean>;
-  addToLog: (command: string) => void;
+  addToLog: (command: string, entryPrice: number) => void;
 }
 
 export default function TradeSection({ prices, onGenerateAI, aiContent, aiLoading, addToLog }: TradeSectionProps) {
@@ -43,7 +43,7 @@ export default function TradeSection({ prices, onGenerateAI, aiContent, aiLoadin
           >
             Sinh Lệnh Scalp AI
           </button>
-          <button onClick={() => addToLog("Lệnh Scalp BTC")} style={{ marginLeft: "10px", background: "#ffcc00", color: "#000", padding: "12px 24px", border: "none", cursor: "pointer" }}>
+          <button onClick={() => addToLog("Lệnh Scalp BTC", bp)} style={{ marginLeft: "10px", background: "#ffcc00", color: "#000", padding: "12px 24px", border: "none", cursor: "pointer" }}>
             Lưu Lệnh
           </button>
           {aiContent.scalp && <div style={{ marginTop: "15px", color: "#c8a882" }}>{aiContent.scalp}</div>}
@@ -65,7 +65,7 @@ export default function TradeSection({ prices, onGenerateAI, aiContent, aiLoadin
           >
             Sinh Lệnh Swing AI
           </button>
-          <button onClick={() => addToLog("Lệnh Swing BTC")} style={{ marginLeft: "10px", background: "#ffcc00", color: "#000", padding: "12px 24px", border: "none", cursor: "pointer" }}>
+          <button onClick={() => addToLog("Lệnh Swing BTC", bp)} style={{ marginLeft: "10px", background: "#ffcc00", color: "#000", padding: "12px 24px", border: "none", cursor: "pointer" }}>
             Lưu Lệnh
           </button>
           {aiContent.swing && <div style={{ marginTop: "15px", color: "#c8a882" }}>{aiContent.swing}</div>}
