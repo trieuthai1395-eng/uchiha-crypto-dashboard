@@ -8,24 +8,25 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY || '',
+        'x-api-key': process.env.ANTHROPIC_API_KEY!,
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
         model: "claude-3-5-sonnet-20240620",
-        max_tokens: 800,
+        max_tokens: 1000,
         messages: [{ role: "user", content: prompt }],
       }),
     });
 
-    const data = await response.json();
-
     if (!response.ok) {
-      return NextResponse.json({ error: data }, { status: response.status });
+      const errorData = await response.json();
+      return NextResponse.json({ content: "Lỗi Claude: " + (errorData.error?.message || "Unknown") });
     }
 
+    const data = await response.json();
     return NextResponse.json({ content: data.content[0].text });
   } catch (error) {
-    return NextResponse.json({ content: "Lỗi kết nối Claude." }, { status: 500 });
+    console.error(error);
+    return NextResponse.json({ content: "Lỗi kết nối AI. Kiểm tra key." });
   }
 }
