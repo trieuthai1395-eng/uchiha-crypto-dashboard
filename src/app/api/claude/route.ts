@@ -4,29 +4,47 @@ export async function POST(request: NextRequest) {
   try {
     const { prompt } = await request.json();
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    // Thử Claude trước
+    const claudeResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY!,
+        'x-api-key': process.env.ANTHROPIC_API_KEY || '',
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
         model: "claude-3-5-sonnet-20240620",
-        max_tokens: 1000,
+        max_tokens: 800,
         messages: [{ role: "user", content: prompt }],
       }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      return NextResponse.json({ content: "Lỗi Claude: " + (errorData.error?.message || "Unknown") });
+    if (claudeResponse.ok) {
+      const data = await claudeResponse.json();
+      return NextResponse.json({ content: data.content[0].text, source: "Claude" });
     }
 
-    const data = await response.json();
-    return NextResponse.json({ content: data.content[0].text });
+    // Fallback Grok (xAI)
+    const grokResponse = await fetch('https://api.x.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.GROK_API_KEY || ''}`,
+      },
+      body: JSON.stringify({
+        model: "grok-beta",
+        messages: [{ role: "user", content: prompt }],
+        max_tokens: 800,
+      }),
+    });
+
+    if (grokResponse.ok) {
+      const data = await grokResponse.json();
+      return NextResponse.json({ content: data.choices[0].message.content, source: "Grok" });
+    }
+
+    return NextResponse.json({ content: "Cả Claude và Grok đều lỗi. Kiểm tra credit." });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ content: "Lỗi kết nối AI. Kiểm tra key." });
+    return NextResponse.json({ content: "Lỗi kết nối AI." });
   }
 }
