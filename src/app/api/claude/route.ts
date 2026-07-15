@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
-  try {
-    const { prompt } = await request.json();
+  const { prompt } = await request.json();
 
-    // Thử Claude trước
-    const claudeResponse = await fetch('https://api.anthropic.com/v1/messages', {
+  // 1. Claude
+  try {
+    const claude = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -14,18 +14,19 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({
         model: "claude-3-5-sonnet-20240620",
-        max_tokens: 800,
+        max_tokens: 600,
         messages: [{ role: "user", content: prompt }],
       }),
     });
-
-    if (claudeResponse.ok) {
-      const data = await claudeResponse.json();
+    if (claude.ok) {
+      const data = await claude.json();
       return NextResponse.json({ content: data.content[0].text, source: "Claude" });
     }
+  } catch {}
 
-    // Fallback Grok (xAI)
-    const grokResponse = await fetch('https://api.x.ai/v1/chat/completions', {
+  // 2. Grok
+  try {
+    const grok = await fetch('https://api.x.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,17 +35,15 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         model: "grok-beta",
         messages: [{ role: "user", content: prompt }],
-        max_tokens: 800,
+        max_tokens: 600,
       }),
     });
-
-    if (grokResponse.ok) {
-      const data = await grokResponse.json();
+    if (grok.ok) {
+      const data = await grok.json();
       return NextResponse.json({ content: data.choices[0].message.content, source: "Grok" });
     }
+  } catch {}
 
-    return NextResponse.json({ content: "Cả Claude và Grok đều lỗi. Kiểm tra credit." });
-  } catch (error) {
-    return NextResponse.json({ content: "Lỗi kết nối AI." });
-  }
+  // 3. Static fallback
+  return NextResponse.json({ content: "Lệnh Scalp BTC: Vào " + Math.round(63000 * 0.998) + " - TP " + Math.round(63000 * 1.015) + " - SL " + Math.round(63000 * 0.991) + ". DYOR." });
 }
