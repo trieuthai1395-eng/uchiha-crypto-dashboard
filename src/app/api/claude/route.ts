@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     });
     if (claude.ok) {
       const data = await claude.json();
-      return NextResponse.json({ content: data.content[0].text, source: "Claude" });
+      return NextResponse.json({ content: data.content[0].text });
     }
   } catch {}
 
@@ -40,9 +40,24 @@ export async function POST(request: NextRequest) {
     });
     if (grok.ok) {
       const data = await grok.json();
-      return NextResponse.json({ content: data.choices[0].message.content, source: "Grok" });
+      return NextResponse.json({ content: data.choices[0].message.content });
     }
   } catch {}
 
-  return NextResponse.json({ content: "Lỗi AI. Kiểm tra credit." });
+  // Gemini
+  try {
+    const gemini = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }]
+      }),
+    });
+    if (gemini.ok) {
+      const data = await gemini.json();
+      return NextResponse.json({ content: data.candidates[0].content.parts[0].text });
+    }
+  } catch {}
+
+  return NextResponse.json({ content: "Lỗi tất cả API. Kiểm tra credit." });
 }
